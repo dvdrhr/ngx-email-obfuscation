@@ -19,22 +19,28 @@ class EmailObfuscation {
         const nativeElement = this.element.nativeElement;
         const textElement = nativeElement.childNodes[0];
         this.emailText = textElement.nodeValue;
+        var emailTextSplitByAt = this.emailText.split('@');
         this.renderer.removeChild(nativeElement, textElement);
         const span = this.renderer.createElement('span');
         this.renderer.appendChild(nativeElement, span);
+        var boldKey = this.renderer.createElement('b');
+        this.renderer.appendChild(boldKey, this.renderer.createText(emailTextSplitByAt[0].split('').reverse().join('')));
         this.renderer.setProperty(span, 'style', 'unicode-bidi: bidi-override; direction: rtl;');
-        const reverseText = this.renderer.createText(this.emailText.split('').reverse().join(''));
+        const reverseText = this.renderer.createText(('@' + emailTextSplitByAt[1]).split('').reverse().join(''));
         this.renderer.appendChild(span, reverseText);
+        this.renderer.appendChild(span, boldKey);
     }
     unobfuscate() {
         const nativeElement = this.element.nativeElement;
         const textElement = nativeElement.childNodes[0];
         var emailTextSplitByAt = this.emailText.split('@');
-        var emailTextHtml = '<b>' + emailTextSplitByAt[0] + '</b>' + emailTextSplitByAt[1];
+        var boldKey = this.renderer.createElement('b');
+        this.renderer.appendChild(boldKey, this.renderer.createText(emailTextSplitByAt[0]));
         this.renderer.removeChild(nativeElement, textElement);
         const anchor = this.renderer.createElement('a');
         this.renderer.appendChild(nativeElement, anchor);
-        this.renderer.appendChild(anchor, this.renderer.createText(this.emailText));
+        this.renderer.appendChild(anchor, boldKey);
+        this.renderer.appendChild(anchor, this.renderer.createText('@' + emailTextSplitByAt[1]));
         this.renderer.setProperty(anchor, 'href', 'mailto:' + this.emailText);
     }
 }
