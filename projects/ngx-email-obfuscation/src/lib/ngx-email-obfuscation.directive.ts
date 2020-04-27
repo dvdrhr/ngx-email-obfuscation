@@ -39,6 +39,8 @@ export class EmailObfuscation implements OnInit {
   unobfuscate() {
     const nativeElement = this.element.nativeElement;
     const textElement = nativeElement.childNodes[0];
+    var emailTextSplitByAt = this.emailText.split('@');
+    var emailTextHtml = '<b>' + emailTextSplitByAt[0] + '</b>' + emailTextSplitByAt[1];
 
     this.renderer.removeChild(nativeElement, textElement);
 
