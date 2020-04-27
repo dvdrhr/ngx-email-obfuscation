@@ -1,8 +1,4 @@
 {
   "name": "ngx-email-obfuscation",
-  "version": "1.0.0",
-  "peerDependencies": {
-    "@angular/core": "^8.0.0 || ^9.0.0-0",
-    "tslib": "^1.10.0"
-  }
+  "version": "1.0.0"
 }
