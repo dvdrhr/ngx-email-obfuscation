@@ -10,6 +10,6 @@ export declare class EmailObfuscation implements OnInit {
     ngOnInit(): void;
     obfuscate(): void;
     unobfuscate(): void;
-    static ɵfac: i0.ɵɵFactoryDef<EmailObfuscation>;
+    static ɵfac: i0.ɵɵFactoryDef<EmailObfuscation, never>;
     static ɵdir: i0.ɵɵDirectiveDefWithMeta<EmailObfuscation, "[emailObfuscation]", never, {}, {}, never>;
 }
