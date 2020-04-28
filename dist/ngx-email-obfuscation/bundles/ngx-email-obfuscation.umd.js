@@ -29,8 +29,8 @@
             this.renderer.appendChild(nativeElement, span);
             this.renderer.setProperty(span, 'style', 'unicode-bidi: bidi-override; direction: rtl;');
             var reverseText = this.printKeyBold ?
-                this.renderer.createText('@' + emailTextSplitByAt[1]).split('').reverse().join('') :
-                this.renderer.createText(emailTextSplitByAt[0] + '@' + emailTextSplitByAt[1]).split('').reverse().join('');
+                this.renderer.createText(('@' + emailTextSplitByAt[1]).split('').reverse().join('')) :
+                this.renderer.createText((emailTextSplitByAt[0] + '@' + emailTextSplitByAt[1]).split('').reverse().join(''));
             this.renderer.appendChild(span, reverseText);
             if (this.printKeyBold) {
                 var boldKey = this.renderer.createElement('b');
