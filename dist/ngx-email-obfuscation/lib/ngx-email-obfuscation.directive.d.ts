@@ -3,6 +3,7 @@ import * as i0 from "@angular/core";
 export declare class EmailObfuscation implements OnInit {
     private element;
     private renderer;
+    printKeyBold: boolean;
     activated: boolean;
     emailText: string;
     onMouseEnter(): void;
@@ -11,5 +12,5 @@ export declare class EmailObfuscation implements OnInit {
     obfuscate(): void;
     unobfuscate(): void;
     static ɵfac: i0.ɵɵFactoryDef<EmailObfuscation, never>;
-    static ɵdir: i0.ɵɵDirectiveDefWithMeta<EmailObfuscation, "[emailObfuscation]", never, {}, {}, never>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<EmailObfuscation, "[emailObfuscation]", never, { "printKeyBold": "printKeyBold"; }, {}, never>;
 }

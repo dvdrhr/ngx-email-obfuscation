@@ -1,9 +1,11 @@
-import { Directive, ElementRef, Renderer2, HostListener, OnInit } from '@angular/core';
+import { Directive, ElementRef, Renderer2, HostListener, OnInit, Input } from '@angular/core';
 
 @Directive({
   selector: '[emailObfuscation]'
 })
 export class EmailObfuscation implements OnInit {
+
+  @Input() printKeyBold : boolean;
 
   activated = false;
   emailText: string;
@@ -31,27 +33,40 @@ export class EmailObfuscation implements OnInit {
 
     const span = this.renderer.createElement('span');
     this.renderer.appendChild(nativeElement, span);
-    var boldKey = this.renderer.createElement('b');
-    this.renderer.appendChild(boldKey, this.renderer.createText(emailTextSplitByAt[0].split('').reverse().join('')));
 
     this.renderer.setProperty(span, 'style', 'unicode-bidi: bidi-override; direction: rtl;');
-    const reverseText = this.renderer.createText(('@' + emailTextSplitByAt[1]).split('').reverse().join(''));
+    const reverseText = this.printKeyBold ?
+                        this.renderer.createText('@' + emailTextSplitByAt[1]).split('').reverse().join('') :
+                        this.renderer.createText(emailTextSplitByAt[0] + '@' + emailTextSplitByAt[1]).split('').reverse().join('');
     this.renderer.appendChild(span, reverseText);
-    this.renderer.appendChild(span, boldKey);
+
+    if (this.printKeyBold) {
+      var boldKey = this.renderer.createElement('b');
+      this.renderer.appendChild(boldKey, this.renderer.createText(emailTextSplitByAt[0].split('').reverse().join('')));
+      this.renderer.appendChild(span, boldKey);
+    }
   }
+
   unobfuscate() {
     const nativeElement = this.element.nativeElement;
     const textElement = nativeElement.childNodes[0];
     var emailTextSplitByAt = this.emailText.split('@');
 
-    var boldKey = this.renderer.createElement('b');
-    this.renderer.appendChild(boldKey, this.renderer.createText(emailTextSplitByAt[0]))
-
     this.renderer.removeChild(nativeElement, textElement);
     const anchor = this.renderer.createElement('a');
     this.renderer.appendChild(nativeElement, anchor);
-    this.renderer.appendChild(anchor, boldKey);
-    this.renderer.appendChild(anchor, this.renderer.createText('@' + emailTextSplitByAt[1]));
+
+    if (this.printKeyBold) {
+      var boldKey = this.renderer.createElement('b');
+      this.renderer.appendChild(boldKey, this.renderer.createText(emailTextSplitByAt[0]))
+      this.renderer.appendChild(anchor, boldKey);
+    }
+    
+    if (this.printKeyBold) {
+      this.renderer.appendChild(anchor, this.renderer.createText('@' + emailTextSplitByAt[1]));
+    } else {
+      this.renderer.appendChild(anchor, this.renderer.createText(emailTextSplitByAt[0] + '@' + emailTextSplitByAt[1]));
+    }
 
     this.renderer.setProperty(anchor, 'href', 'mailto:' + this.emailText);
   }
